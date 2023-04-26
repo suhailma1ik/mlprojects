@@ -7,6 +7,7 @@ mu, sigma = 0, 1
 # Generate 1000 random samples from the normal distribution
 samples = np.random.normal(mu, sigma, 1000)
 
+print(samples)
 # Plot the histogram of the samples
 plt.hist(samples, bins=50, density=True)
 

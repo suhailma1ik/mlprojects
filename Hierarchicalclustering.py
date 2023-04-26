@@ -17,7 +17,9 @@ def agglomerative_clustering(data, k):
         merge_index = None
         for i in range(len(clusters)):
             for j in range(i+1, len(clusters)):
-                dist = np.min(pairwise_dist[clusters[i], clusters[j]])
+                # Compute the distance between clusters i and j
+                indices_i, indices_j = np.meshgrid(clusters[i], clusters[j])
+                dist = np.min(pairwise_dist[indices_i, indices_j])
                 if dist < min_dist:
                     min_dist = dist
                     merge_index = (i, j)
@@ -34,8 +36,6 @@ def agglomerative_clustering(data, k):
     
     return cluster_assignments
 
-
-# implement
 
 # Generate some sample data
 np.random.seed(0)

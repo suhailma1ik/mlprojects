@@ -44,3 +44,5 @@ X_transformed = pca.transform(X)
 from sklearn.cluster import KMeans
 kmeans = KMeans(n_clusters=3)
 y_pred = kmeans.fit_predict(X_transformed)
+
+print(y_pred)

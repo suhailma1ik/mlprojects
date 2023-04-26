@@ -11,7 +11,7 @@ responses = {
 # Define a function to get a response from the bot
 def get_response(user_input):
     # Convert the user input to lowercase and remove any punctuation
-    user_input = user_input.lower().strip(".,!?")
+    user_input = user_input.lower()
     
     # Check if the user input matches any of the predefined responses
     for key in responses.keys():

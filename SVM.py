@@ -1,34 +1,23 @@
-import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
 
-class SVM:
-    def __init__(self, learning_rate=0.01, lambda_param=0.01, num_iterations=1000):
-        self.learning_rate = learning_rate
-        self.lambda_param = lambda_param
-        self.num_iterations = num_iterations
-        self.weights = None
-        self.bias = None
-    
-    def fit(self, X, y):
-        # Initialize parameters
-        n_samples, n_features = X.shape
-        self.weights = np.zeros(n_features)
-        self.bias = 0
-        
-        # Gradient descent optimization
-        for iteration in range(self.num_iterations):
-            # Compute the margin and the hinge loss
-            margin = y * (X.dot(self.weights) + self.bias)
-            hinge_loss = np.maximum(0, 1 - margin)
-            
-            # Compute the gradients of the weights and the bias
-            d_weights = self.lambda_param * self.weights - np.mean(X * y[:, np.newaxis] * (margin < 1), axis=0)
-            d_bias = -np.mean(y * (margin < 1))
-            
-            # Update the parameters using the gradients
-            self.weights -= self.learning_rate * d_weights
-            self.bias -= self.learning_rate * d_bias
-    
-    def predict(self, X):
-        # Predict the class labels of the input data
-        margin = X.dot(self.weights) + self.bias
-        return np.sign(margin)
+# Load the breast cancer dataset
+data = load_breast_cancer()
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.data, data.target, test_size=0.2, random_state=42)
+
+# Instantiate the SVM model
+model = SVC(kernel='linear')
+
+# Train the SVM model
+model.fit(X_train, y_train)
+
+# Make predictions on the testing data
+y_pred = model.predict(X_test)
+
+# Calculate the accuracy of the model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy}")
